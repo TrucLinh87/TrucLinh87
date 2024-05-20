@@ -123,7 +123,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         public void bind(User userResponse) {
-            tvId.setText("Id: " + userResponse.getId());
+
             tvFirst.setText("First Name: " + userResponse.getFirstname());
             tvLast.setText("Last Name: " + userResponse.getLastName());
             tvOther.setText("Other Name: " + userResponse.getOtherName());

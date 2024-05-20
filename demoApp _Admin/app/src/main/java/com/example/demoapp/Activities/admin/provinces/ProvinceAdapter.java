@@ -123,7 +123,7 @@ public class ProvinceAdapter extends RecyclerView.Adapter<ProvinceAdapter.Provin
         }
 
         public void bind(Province province) {
-            tvProvinceName.setText(province.getName());
+            tvProvinceName.setText("Province name: "+province.getName());
         }
     }
 

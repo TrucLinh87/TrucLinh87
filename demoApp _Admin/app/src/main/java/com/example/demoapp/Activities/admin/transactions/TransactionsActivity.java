@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.demoapp.HttpRequest.ApiService;
 import com.example.demoapp.Models.Dto.Response.BaseResponse;
@@ -50,19 +51,19 @@ public class TransactionsActivity extends AppCompatActivity {
                 getTransactionsWithSort(0, 10, "amount:asc");
             }
         });
-//        searchView.clearFocus();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                search(newText);
-//                return true;
-//            }
-//        });
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                return true;
+            }
+        });
 
 
 
@@ -89,23 +90,30 @@ public class TransactionsActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-    //    private void search(String string){
-//        List<User> users = new ArrayList<>();
-//        for(User user : ){
-//            String lastName = user.getLastName();
-//            String otherName = user.getOtherName();
-//            if(lastName != null && otherName != null) {
-//                if(lastName.toLowerCase().contains(string.toLowerCase()) || otherName.toLowerCase().contains(string.toLowerCase())) {
-//                    users.add(user);
-//                }
-//            }
-//        }
-//        if(users.isEmpty()){
-//            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
-//        } else {
-//            transactionAdapter.setUsers(users);
-//        }
-//    }
+    private void search(String string) {
+        List<UserTransaction> filteredList = new ArrayList<>();
+
+        for (UserTransaction transaction : transactionList) {
+            String transactionType = transaction.getTransactionType();
+            String fromAccount = transaction.getFromAccount();
+            String toAccount = transaction.getToAccount();
+
+            // Kiểm tra xem từng trường dữ liệu của giao dịch có chứa chuỗi tìm kiếm không
+            if (transactionType != null && transactionType.toLowerCase().contains(string.toLowerCase())) {
+                filteredList.add(transaction);
+            } else if (fromAccount != null && fromAccount.toLowerCase().contains(string.toLowerCase())) {
+                filteredList.add(transaction);
+            } else if (toAccount != null && toAccount.toLowerCase().contains(string.toLowerCase())) {
+                filteredList.add(transaction);
+            }
+        }
+
+        if (filteredList.isEmpty()) {
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+        } else {
+            transactionAdapter.setTransactions(filteredList);
+        }
+    }
     private void getTransactionsWithSort(int pageNo, int pageSize, String sortBy) {
         ApiService.apiService.getTransactionsWithSort(pageNo, pageSize, sortBy)
                 .enqueue(new Callback<BaseResponse<PageResponse<List<UserTransaction>>>>() {

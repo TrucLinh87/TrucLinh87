@@ -36,7 +36,7 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
             @NonNull ViewGroup parent, int viewType
     ) {
         View view = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.admin_account, parent, false);
+                .inflate(R.layout.admin_account, parent, false);
         context = parent.getContext();
         return new AccountInfoViewHolder(view);
     }
@@ -68,35 +68,30 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
                 .setNegativeButton(android.R.string.no, null)
                 .show();
     }
+
     public void deleteAccount(int position) {
-        // Lấy ID của tài khoản cần xóa
         int accountId = Integer.parseInt(accountInfoList.get(position)
-                                                        .getId());
-
-        // Gọi API để xóa tài khoản
+                .getId());
         ApiService.apiService.deleteAccount(accountId)
-                             .enqueue(new Callback<BaseResponse<Void>>() {
-                                 @Override
-                                 public void onResponse(
-                                         Call<BaseResponse<Void>> call,
-                                          Response<BaseResponse<Void>> response
-                                 ) {
-                                     if (response.isSuccessful()) {
-                                         // Nếu xóa thành công từ hệ thống, thực hiện xóa tài khoản khỏi danh sách và cập nhật giao diện
-                                         accountInfoList.remove(position);
-                                         notifyItemRemoved(position);
-                                         notifyItemRangeChanged(position, accountInfoList.size());
-                                     } else {
+                .enqueue(new Callback<BaseResponse<Void>>() {
+                    @Override
+                    public void onResponse(
+                            Call<BaseResponse<Void>> call,
+                            Response<BaseResponse<Void>> response
+                    ) {
+                        if (response.isSuccessful()) {
+                            accountInfoList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, accountInfoList.size());
+                        } else {
 
-                                     }
-                                 }
+                        }
+                    }
 
-                                 @Override
-                                 public void onFailure(Call<BaseResponse<Void>> call, Throwable t) {
-                                     // Xử lý khi gặp lỗi kết nối
-                                     // Ví dụ: Hiển thị thông báo lỗi cho người dùng
-                                 }
-                             });
+                    @Override
+                    public void onFailure(Call<BaseResponse<Void>> call, Throwable t) {
+                    }
+                });
     }
 
     public class AccountInfoViewHolder extends RecyclerView.ViewHolder {
@@ -120,12 +115,10 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
         }
 
         public void bind(AccountInfoResponse accountInfo) {
-            tvId.setText(accountInfo.getId());
-            tvAccountName.setText(accountInfo.getAccountName());
-            tvAccountBalance.setText(accountInfo.getAccountBalance()
-                                                .toString());
-            tvAccountNumber.setText(accountInfo.getAccountNumber());
-            tvBranchName.setText(accountInfo.getBranchName());
+            tvAccountName.setText("Account name: " + accountInfo.getAccountName());
+            tvAccountBalance.setText("Account balance: " + accountInfo.getAccountBalance().toString());
+            tvAccountNumber.setText("Account number: " + accountInfo.getAccountNumber());
+            tvBranchName.setText("Branch name: " + accountInfo.getBranchName());
         }
     }
 

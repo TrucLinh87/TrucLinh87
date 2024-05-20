@@ -405,11 +405,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/img_special_admin"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="12dp"
                             android:fontFamily="@font/comfortaabold"
-                            android:text="Special"
+                            android:text="Transaction"
                             android:textColor="#218A25"
+                            android:layout_centerHorizontal="true"
                             android:textSize="20sp" />
 
                         <ImageView

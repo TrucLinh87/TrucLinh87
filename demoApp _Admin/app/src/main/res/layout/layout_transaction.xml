@@ -6,7 +6,9 @@
     android:layout_marginTop="15dp"
     android:layout_marginEnd="20dp"
     android:layout_marginBottom="15dp"
-    android:background="@drawable/bo_notification"
+    android:background="@drawable/bo_admins"
+    android:elevation="10dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
     <TextView

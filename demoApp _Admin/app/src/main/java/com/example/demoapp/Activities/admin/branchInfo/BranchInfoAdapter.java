@@ -125,11 +125,10 @@ public class BranchInfoAdapter extends RecyclerView.Adapter<BranchInfoAdapter.Br
 
         public void bind(BranchInfo branchInfo) {
 
-            tvId.setText(branchInfo.getId());
-            tvBranchName.setText(branchInfo.getBranchName());
-            tvAddress.setText(branchInfo.getAddress());
+            tvBranchName.setText("Branch name: "+branchInfo.getBranchName());
+            tvAddress.setText("Address: "+branchInfo.getAddress());
             if (tvProvince != null && branchInfo.getProvinceName() != null) {
-                tvProvince.setText(branchInfo.getProvinceName()
+                tvProvince.setText("Province name: "+branchInfo.getProvinceName()
                                              .getName());
             }
             List<AccountInfoResponse> accountInfoList = branchInfo.getAccountInfoResponse();
@@ -137,9 +136,9 @@ public class BranchInfoAdapter extends RecyclerView.Adapter<BranchInfoAdapter.Br
                 AccountInfoResponse accountInfo =
                         accountInfoList.get(0); // Assuming only one account is associated with the branch
                 if (accountInfo != null) {
-                    tvAccountName.setText(accountInfo.getAccountName());
-                    tvAccountBalance.setText(String.valueOf(accountInfo.getAccountBalance()));
-                    tvAccountNumber.setText(accountInfo.getAccountNumber());
+                    tvAccountName.setText("Account: "+ "\nAccount name: "+accountInfo.getAccountName());
+                    tvAccountBalance.setText(String.valueOf("Account balance: "+accountInfo.getAccountBalance()));
+                    tvAccountNumber.setText("Account number: "+accountInfo.getAccountNumber());
                 }
             }
 
